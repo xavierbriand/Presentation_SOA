@@ -1,383 +1,539 @@
 <!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="utf-8">
 
-	<head>
-		<meta charset="utf-8">
+        <title>Moving to a Service Oriented Architecture from tightly coupled applicationsi - Xavier Briand</title>
 
-		<title>reveal.js - The HTML Presentation Framework</title>
+        <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+        <meta name="author" content="Xavier Brians <xavierbriand@gmail.com>">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <link rel="stylesheet" href="css/reveal.min.css">
+        <link rel="stylesheet" href="css/theme/default.css" id="theme">
+        <link rel="stylesheet" href="lib/css/zenburn.css"><!-- For syntax highlighting -->
+        <script>
+            document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+        <!--[if lt IE 9]>
+            <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
 
-		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
-		<meta name="author" content="Hakim El Hattab">
+    <body>
+        <div class="reveal">
+            <div class="slides">
+                <section>
+                    <img src="images/me.png" class="round big" alt=""/>
+                    <h3>Xavier B<span class="fragment highlight-red">r</span>iand</h3>
+                    <p>Senior Web Application Developer</p>
+                    <p><small>ExperiencePoint Inc</small></p>
+                    <p class="fragment"><small class="quiet">(please excuse my accent)</small></p>
+                    <aside class="notes">
+                        SensioLabs trainings/coaching
+                    </aside>
+                </section>
 
-		<meta name="apple-mobile-web-app-capable" content="yes" />
-		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+                <section data-background="#000000">
+                    <section data-transition="linear">
+                        <img src="images/moustache.jpg" class="nude" alt=""/>
+                        <aside class="notes">
+                            not only for the amazing styles
+                            <br/>
+                            not only a Hypterish trend
+                            <br/>
+                            Movember is a month long global event in November where men grow
+                            moustaches to raise awareness and funds for men's health issues.
+                        </aside>
+                    </section>
+                    <section data-transition="linear">
+                        <h2><a href="http://mobro.co/xavierbriand">mobro.co/xavierbriand</a></h2>
+                    </section>
+                </section>
 
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+                <section data-transition="none">
+                    <h3>Moving to a<br/>Service Oriented Architecture<br/>from tightly coupled<br/>applications</h3>
+                    <aside class="notes">
+                        kitten free presentation
+                    </aside>
+                </section>
 
-		<link rel="stylesheet" href="css/reveal.min.css">
-		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+                <section data-transition="fade">
+                    <h2>ExperiencePoint</h2>
+                    <p>
+                        "The best way to learn is to experience."
+                    </p>
+                    <aside class="notes">
+                        21 employees
+                        <br/>
+                        academics and corporations
+                        <br/>
+                        Change Management
+                        <br/>
+                        Innovation (Design Thinking)
+                    </aside>
+                </section>
 
-		<!-- For syntax highlighting -->
-		<link rel="stylesheet" href="lib/css/zenburn.css">
+                <section data-transition="none">
+                    <section>
+                        <h2>Business</h2>
+                        <p><img src="images/business.jpg" alt=""/></p>
+                        <p>(1+½)+(4+3) simulations</p>
+                        <aside class="notes">
+                            Frontend App
+                            <br/>
+                            Backend App
+                            <br/>
+                            (simulation + Flash app) x5
+                            <br/>
+                            Low load, high available (2lb fallback + 3 server + 2 db server fallback + backup infra)
+                        </aside>
+                    </section>
+                    <section>
+                        <img src="images/gateway.png" alt=""/>
+                    </section>
+                    <section>
+                        <img src="images/gt.png" alt=""/>
+                    </section>
+                </section>
 
-		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
-		<script>
-			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
-		</script>
+                <section data-transition="fade">
+                    <h2>Previous Architecture</h2>
+                    <p><img src="images/old-arch.jpg" alt=""/></p>
+                    <aside class="notes">
+                        Old: All symfony1.0 app (created in 2005, end of support jan 2010 (symfony1.4 november 2012))
+                        <br/>
+                        Physical env = sf env
+                        <br/>
+                        Shared models and plugins without dependency management
+                        <br/>
+                        Quality nightmare, deployed form dev env "it works for me"
+                    </aside>
+                </section>
 
-		<!--[if lt IE 9]>
-		<script src="lib/js/html5shiv.js"></script>
-		<![endif]-->
-	</head>
+                <section data-background="#F2DEDE" class="red">
+                    <h2>Problems</h2>
+                    <p class="fragment">tightly coupled applications</p>
+                    <p class="fragment">no dependency management</p>
+                    <p class="fragment">no tests</p>
+                    <p class="fragment">deprecated technologies</p>
+                    <p class="fragment">1 dev symptoms</p>
+                    <p class="fragment">2 environments</p>
+                    <p class="fragment">SVN</p>
 
-	<body>
+                    <aside class="notes">
+                        manage the existant while migrating, no big switch to convert everything
+                        <br/>
+                        can simply deploy one app if model changed
+                        <br/>
+                        No way to know which application use which part of the other application
+                        <br/>
+                        Physical environment (platform) == framework environment
+                        <br/>
+                        SVN, hard to branch, hard to merge => dev don’t branch
+                        <br/>
+                        Flash AMF (support issues), hard to debug; symfony1.0, no php 5.4
+                    </aside>
+                </section>
 
-		<div class="reveal">
+                <section>
+                    <h2>ExperienceChange Model</h2>
+                    <p><img src="images/ec-model.jpg" alt=""/></p>
 
-			<!-- Any section element inside of this container is displayed as a slide -->
-			<div class="slides">
-				<section>
-					<h1>Reveal.js</h1>
-					<h3>HTML Presentations Made Easy</h3>
-					<p>
-						<small>Created by <a href="http://hakim.se">Hakim El Hattab</a> / <a href="http://twitter.com/hakimel">@hakimel</a></small>
-					</p>
-				</section>
+                    <aside class="notes">
+                        internal culture teaches use this
+                        <br/>
+                        envisage
+                        <br/>
+                        Enlist
+                        <br/>
+                        Communicate
+                        <br/>
+                        Act
+                        <br/>
+                        Consolidate
+                    </aside>
+                </section>
 
-				<section>
-					<h2>Heads Up</h2>
-					<p>
-						reveal.js is a framework for easily creating beautiful presentations using HTML. You'll need a browser with
-						support for CSS 3D transforms to see it in its full glory.
-					</p>
+                <section data-transition="fade">
+                    <h2>Meet the dev team</h2>
+                    <div class="trombi">
+                        <p class="fragment roll-in">
+                            <img src="images/david.jpg" width="150" class="round" alt=""/>
+                        </p>
+                        <p class="fragment roll-in">
+                            <img src="images/craig.png" width="150" class="round"  alt=""/>
+                            <img src="images/ryan.png" width="150" class="round"  alt=""/>
+                        </p>
+                        <p class="fragment roll-in">
+                            <img src="images/brian.jpg" width="150" class="round"  alt=""/>
+                            <img src="images/me.png" width="150" class="round"  alt=""/>
+                            <img src="images/paul.jpg" width="150" class="round" alt=""/>
+                        </p>
+                    </div>
+                    <aside class="notes">
+                        + 2 designers
+                        <br />
+                        Holy Trinity
+                    </aside>
+                </section>
 
-					<aside class="notes">
-						Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you open the speaker notes window (hit 's' on your keyboard).
-					</aside>
-				</section>
+                <section data-transition="fade">
+                    <h3>Step 1</h3>
+                    <h2>Reset ⟲</h2>
+                    <p class="fragment">
+                        Goal: efficient dev environment
+                    </p>
+                    <div class="fragment">
+                        <p>VM</p>
+                        <p>Modern SCM</p>
+                        <p>Modern Frameworks</p>
+                        <p>Tasks automation</p>
+                    </div>
 
-				<!-- Example of nested vertical slides -->
-				<section>
-					<section>
-						<h2>Vertical Slides</h2>
-						<p>
-							Slides can be nested inside of other slides,
-							try pressing <a href="#" class="navigate-down">down</a>.
-						</p>
-						<a href="#" class="image navigate-down">
-							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
-						</a>
-					</section>
-					<section>
-						<h2>Basement Level 1</h2>
-						<p>Press down or up to navigate.</p>
-					</section>
-					<section>
-						<h2>Basement Level 2</h2>
-						<p>Cornify</p>
-						<a class="test" href="http://cornify.com">
-							<img width="280" height="326" src="https://s3.amazonaws.com/hakim-static/reveal-js/cornify.gif" alt="Unicorn">
-						</a>
-					</section>
-					<section>
-						<h2>Basement Level 3</h2>
-						<p>That's it, time to go back up.</p>
-						<a href="#/2" class="image">
-							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Up arrow" style="-webkit-transform: rotate(180deg);">
-						</a>
-					</section>
-				</section>
+                    <aside class="notes">
+                        VM: FreeBSD jails (can be cloned, saved, restored) => consistent dev env while keeping dev in different env. Can achieve prod = dev
+                        <br/>
+                        Git + Coding tools (vim)
+                        <br/>
+                        Sf2 Framework (conventiosn, best practices, libs), Backbone, Angular
+                        <br/>
+                        Physical env != Sf env
+                        <br/>
+                        Tests
+                        <br/>
+                        Makefile, PHP CI, Static code analysis
+                    </aside>
+                </section>
 
-				<section>
-					<h2>Slides</h2>
-					<p>
-						Not a coder? No problem. There's a fully-featured visual editor for authoring these, try it out at <a href="http://slid.es" target="_blank">http://slid.es</a>.
-					</p>
-				</section>
+                <section data-transition="fade">
+                    <section>
+                        <h3>Problem</h3>
+                        <h2>Dependency management</h2>
+                        <div class="fragment">
+                            <p><img src="images/composer.png" class="nude" alt=""/></p>
+                            <p><small class="quiet">logo: WizardCat</small></p>
+                        </div>
+                        <p class="fragment monospace">$ make build</p>
 
-				<section>
-					<h2>Point of View</h2>
-					<p>
-						Press <strong>ESC</strong> to enter the slide overview.
-					</p>
-					<p>
-						Hold down alt and click on any element to zoom in on it using <a href="http://lab.hakim.se/zoom-js">zoom.js</a>. Alt + click anywhere to zoom back out.
-					</p>
-				</section>
-
-				<section>
-					<h2>Works in Mobile Safari</h2>
-					<p>
-						Try it out! You can swipe through the slides and pinch your way to the overview.
-					</p>
-				</section>
-
-				<section>
-					<h2>Marvelous Unordered List</h2>
-					<ul>
-						<li>No order here</li>
-						<li>Or here</li>
-						<li>Or here</li>
-						<li>Or here</li>
-					</ul>
-				</section>
-
-				<section>
-					<h2>Fantastic Ordered List</h2>
-					<ol>
-						<li>One is smaller than...</li>
-						<li>Two is smaller than...</li>
-						<li>Three!</li>
-					</ol>
-				</section>
-
-				<section data-markdown>
-					<script type="text/template">
-						## Markdown support
-
-						For those of you who like that sort of thing. Instructions and a bit more info available [here](https://github.com/hakimel/reveal.js#markdown).
-
-						```
-						<section data-markdown>
-						  ## Markdown support
-
-						  For those of you who like that sort of thing.
-						  Instructions and a bit more info available [here](https://github.com/hakimel/reveal.js#markdown).
-						</section>
-						```
-					</script>
-				</section>
-
-				<section id="transitions">
-					<h2>Transition Styles</h2>
-					<p>
-						You can select from different transitions, like: <br>
-						<a href="?transition=cube#/transitions">Cube</a> -
-						<a href="?transition=page#/transitions">Page</a> -
-						<a href="?transition=concave#/transitions">Concave</a> -
-						<a href="?transition=zoom#/transitions">Zoom</a> -
-						<a href="?transition=linear#/transitions">Linear</a> -
-						<a href="?transition=fade#/transitions">Fade</a> -
-						<a href="?transition=none#/transitions">None</a> -
-						<a href="?#/transitions">Default</a>
-					</p>
-				</section>
-
-				<section id="themes">
-					<h2>Themes</h2>
-					<p>
-						Reveal.js comes with a few themes built in: <br>
-						<a href="?#/themes">Default</a> -
-						<a href="?theme=sky#/themes">Sky</a> -
-						<a href="?theme=beige#/themes">Beige</a> -
-						<a href="?theme=simple#/themes">Simple</a> -
-						<a href="?theme=serif#/themes">Serif</a> -
-						<a href="?theme=night#/themes">Night</a> <br>
-						<a href="?theme=moon.css#/themes">Moon</a> -
-						<a href="?theme=simple.css#/themes">Simple</a> -
-						<a href="?theme=solarized.css#/themes">Solarized</a>
-					</p>
-					<p>
-						<small>
-							* Theme demos are loaded after the presentation which leads to flicker. In production you should load your theme in the <code>&lt;head&gt;</code> using a <code>&lt;link&gt;</code>.
-						</small>
-					</p>
-				</section>
-
-				<section>
-					<h2>Global State</h2>
-					<p>
-						Set <code>data-state="something"</code> on a slide and <code>"something"</code>
-						will be added as a class to the document element when the slide is open. This lets you
-						apply broader style changes, like switching the background.
-					</p>
-				</section>
-
-				<section data-state="customevent">
-					<h2>Custom Events</h2>
-					<p>
-						Additionally custom events can be triggered on a per slide basis by binding to the <code>data-state</code> name.
-					</p>
-					<pre><code data-trim contenteditable style="font-size: 18px; margin-top: 20px;">
-Reveal.addEventListener( 'customevent', function() {
-	console.log( '"customevent" has fired' );
-} );
-					</code></pre>
-				</section>
-
-				<section>
-					<section data-background="#007777">
-						<h2>Slide Backgrounds</h2>
-						<p>
-							Set <code>data-background="#007777"</code> on a slide to change the full page background to the given color. All CSS color formats are supported.
-						</p>
-						<a href="#" class="image navigate-down">
-							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
-						</a>
-					</section>
-					<section data-background="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png">
-						<h2>Image Backgrounds</h2>
-						<pre><code>&lt;section data-background="image.png"&gt;</code></pre>
-					</section>
-					<section data-background="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" data-background-repeat="repeat" data-background-size="100px">
-						<h2>Repeated Image Backgrounds</h2>
-						<pre><code style="word-wrap: break-word;">&lt;section data-background="image.png" data-background-repeat="repeat" data-background-size="100px"&gt;</code></pre>
-					</section>
-				</section>
-
-				<section data-transition="linear" data-background="#4d7e65" data-background-transition="slide">
-					<h2>Background Transitions</h2>
-					<p>
-						Pass reveal.js the <code>backgroundTransition: 'slide'</code> config argument to make backgrounds slide rather than fade.
-					</p>
-				</section>
-
-				<section data-transition="linear" data-background="#8c4738" data-background-transition="slide">
-					<h2>Background Transition Override</h2>
-					<p>
-						You can override background transitions per slide by using <code>data-background-transition="slide"</code>.
-					</p>
-				</section>
-
-				<section>
-					<h2>Clever Quotes</h2>
-					<p>
-						These guys come in two forms, inline: <q cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
-						&ldquo;The nice thing about standards is that there are so many to choose from&rdquo;</q> and block:
-					</p>
-					<blockquote cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
-						&ldquo;For years there has been a theory that millions of monkeys typing at random on millions of typewriters would
-						reproduce the entire works of Shakespeare. The Internet has proven this theory to be untrue.&rdquo;
-					</blockquote>
-				</section>
-
-				<section>
-					<h2>Pretty Code</h2>
-					<pre><code data-trim contenteditable>
-function linkify( selector ) {
-  if( supports3DTransforms ) {
-
-    var nodes = document.querySelectorAll( selector );
-
-    for( var i = 0, len = nodes.length; i &lt; len; i++ ) {
-      var node = nodes[i];
-
-      if( !node.className ) {
-        node.className += ' roll';
-      }
+                        <aside class="notes">
+                            Composer</li>
+                            As easy as adding a package.json file<br/>
+                            as easy as: composer install<br/>
+                            Fetch code source from outside (scscmgnostic)<br/>
+                            Set dependencies on your php version and packages<br/>
+                            Satis for private repository
+                        </aside>
+                    </section>
+                    <section>
+                        <pre><code data-trim>
+{
+    "name"     : "ep/ec",
+    "license"  : "proprietary",
+    "autoload" : {
+        "psr-0": { "": "src/" }
+    },
+    "require": {
+        "php"                   : ">=5.3.3",
+        "symfony/symfony"       : "~2.4",
+        "doctrine/orm"          : "~2.2,>=2.2.3",
+        "ep/backend-sdk-bundle" : "dev-master",
+        "ep/old-stuff"          : "dev-trunk"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*"
     }
-  }
 }
-					</code></pre>
-					<p>Courtesy of <a href="http://softwaremaniacs.org/soft/highlight/en/description/">highlight.js</a>.</p>
-				</section>
+                        </code></pre>
+                    </section>
+                    <section>
+                        <pre><code data-trim>
+$ php composer.phar
+   ______
+  / ____/___  ____ ___  ____  ____  ________  _____
+ / /   / __ \/ __ `__ \/ __ \/ __ \/ ___/ _ \/ ___/
+/ /___/ /_/ / / / / / / /_/ / /_/ (__  )  __/ /
+\____/\____/_/ /_/ /_/ .___/\____/____/\___/_/
+                    /_/
 
-				<section>
-					<h2>Intergalactic Interconnections</h2>
-					<p>
-						You can link between slides internally,
-						<a href="#/2/3">like this</a>.
-					</p>
-				</section>
+Available commands:
+  install          Installs the project dependencies from the composer.lock file if present, or falls back on the composer.json.
+  require          Adds required packages to your composer.json and installs them
+  search           Search for packages
+  self-update      Updates composer.phar to the latest version.
+  status           Show a list of locally modified packages
+  update           Updates your dependencies to the latest version according to composer.json, and updates the composer.lock file.
+  validate         Validates a composer.json
+                        </code></pre>
+                    </section>
+                </section>
 
-				<section>
-					<section>
-						<h2>Fragmented Views</h2>
-						<p>Hit the next arrow...</p>
-						<p class="fragment">... to step through ...</p>
-						<ol>
-							<li class="fragment"><code>any type</code></li>
-							<li class="fragment"><em>of view</em></li>
-							<li class="fragment"><strong>fragments</strong></li>
-						</ol>
+                <section data-transition="fade">
+                    <h3>Problem</h3>
+                    <h2>App config management</h2>
+                    <p class="fragment monospace">composer (Platform packages)</p>
+                    <p class="fragment monospace">incenteev/composer-parameter-handler</p>
+                    <p class="fragment monospace">$ make build</p>
 
-						<aside class="notes">
-							This slide has fragments which are also stepped through in the notes window.
-						</aside>
-					</section>
-					<section>
-						<h2>Fragment Styles</h2>
-						<p>There's a few styles of fragments, like:</p>
-						<p class="fragment grow">grow</p>
-						<p class="fragment shrink">shrink</p>
-						<p class="fragment roll-in">roll-in</p>
-						<p class="fragment fade-out">fade-out</p>
-						<p class="fragment highlight-red">highlight-red</p>
-						<p class="fragment highlight-green">highlight-green</p>
-						<p class="fragment highlight-blue">highlight-blue</p>
-					</section>
-				</section>
+                    <aside class="notes">
+                        Application should be unaware of physical environment details, but should provide requirements.
+                        <br/>
+                        <br/>
+                        composer help to define those requirements
+                        <br/>
+                        Dependency injection container and bundle extension make the work pretty easy for sf2
+                        <br/>
+                        Use those good practices for sf1
+                    </aside>
+                </section>
 
-				<section>
-					<h2>Spectacular image!</h2>
-					<a class="image" href="http://lab.hakim.se/meny/" target="_blank">
-						<img width="320" height="299" src="http://s3.amazonaws.com/hakim-static/portfolio/images/meny.png" alt="Meny">
-					</a>
-				</section>
+                <section data-transition="fade">
+                    <h3>Problem</h3>
+                    <h2>QA</h2>
+                    <div class="fragment">
+                        <p><img src="images/jenkins.png" class="" alt=""/></p>
+                        +
+                        <p>
+                            <a href="http://jenkins-php.org/">jenkins-php.org</a>
+                        </p>
+                    </div>
+                    <p class="fragment monospace">$ make prepare analysis</p>
 
-				<section>
-					<h2>Export to PDF</h2>
-					<p>Presentations can be <a href="https://github.com/hakimel/reveal.js#pdf-export">exported to PDF</a>, below is an example that's been uploaded to SlideShare.</p>
-					<iframe id="slideshare" src="http://www.slideshare.net/slideshow/embed_code/13872948" width="455" height="356" style="margin:0;overflow:hidden;border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen> </iframe>
-					<script>
-						document.getElementById('slideshare').attributeName = 'allowfullscreen';
-					</script>
-				</section>
+                    <aside class="notes">
+                        check style
+                        <br/>
+                        complexity
+                        <br/>
+                        duplication
+                        <br/>
+                        tests + code coverage
+                        <br/>
+                        trend
+                    </aside>
+                </section>
 
-				<section>
-					<h2>Take a Moment</h2>
-					<p>
-						Press b or period on your keyboard to enter the 'paused' mode. This mode is helpful when you want to take distracting slides off the screen
-						during a presentation.
-					</p>
-				</section>
+                <section>
+                    <h3>Step 2</h3>
+                    <h2>“Defeat in detail”</h2>
+                    <p class="fragment">Divide and gather (DRY)</p>
+                    <p class="fragment">Keep things small + KISS</p>
+                    <p class="fragment">Design by contract</p>
+                    <p class="fragment">Leverage your architecture</p>
 
-				<section>
-					<h2>Stellar Links</h2>
-					<ul>
-						<li><a href="http://slid.es">Try the online editor</a></li>
-						<li><a href="https://github.com/hakimel/reveal.js">Source code on GitHub</a></li>
-						<li><a href="http://twitter.com/hakimel">Follow me on Twitter</a></li>
-					</ul>
-				</section>
+                    <aside class="notes">
+                        Where there code duplication there is an opportunity to gather this code and create a new module\<br/>
+                        Small concern == small responsability => easier to dev/test/deploy<br/>
+                        Design by contract Black box, expose interfaces.<br/>
+                        Benefits: Easy to manage, defined boundaries, independant<br/>
+                        Constraints: interface versioning
+                    </aside>
+                </section>
 
-				<section>
-					<h1>THE END</h1>
-					<h3>BY Hakim El Hattab / hakim.se</h3>
-				</section>
+                <section data-transition="fade">
+                    <h2>Opportunity: GlobalTech</h2>
+                    <aside class="notes">
+                        From scratch, Sf2 + Flex<br/>
+                        Plan to merge every similar product into one application => ExperienceChange<br/>
+                        But don’t abstract too soon, build what you need and embrace possibilities
+                    </aside>
+                </section>
 
-			</div>
+                <section data-transition="fade">
+                    <section>
+                        <h2>Inside</h2>
+                        <p class="fragment">Remove Flash... <span class="fragment">No!  Ok but:</span></p>
+                        <h3 class="fragment">Let’s use the best technology<br/>to do the job</h3>
+                        <p class="fragment">AMF => plain HTTP via browser</p>
+                        <p class="fragment">Business Logic => Backend</p>
+                        <p class="fragment">Frontend UI => Flash</p>
+                    </section>
+                    <section data-transition="fade">
+                        <h2>Hypermedia API</h2>
+                        <p class="fragment roll-in code">
+                            &gt; POST /games/ + content
+                            <br/>
+                            <br/>
+                            &lt; 201 Created
+                            <br/>
+                            &lt; Location /games/1
+                                                </p>
+                                                <p class="fragment roll-in code">
+                            &gt; GET /games/1
+                            <br/>
+                            <br/>
+                            &lt; 200 Ok
+                            <br/>
+                            &lt;
+                            <br/>
+                            &lt; &lt;game&gt;
+                            <br/>
+                            &lt; &nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- ... --&gt;
+                            <br/>
+                            &lt; &nbsp;&nbsp;&nbsp;&nbsp;&lt;links rel=”actionX” src=”...”&gt;&lt;/links&gt;
+                            <br/>
+                            &lt; &nbsp;&nbsp;&nbsp;&nbsp;&lt;links rel=”actionY” src=”...”&gt;&lt;/links&gt;
+                            <br/>
+                            &lt; &lt;/game&gt;
+                        </p>
+                        <p class="fragment">
+                            <small>
+                                David Zuelke "Designing HTTP Interfaces and RESTful Web Services"
+                            </small>
+                        </p>
+                        <aside class="notes">
+                            The HATEOAS constraint serves to decouple client and server in a way that allows the server to evolve functionality independently,
+                            <br/>
+                            browse a collection with previous/next links
+                            <br/>
+                        </aside>
+                    </section>
+                </section>
 
-		</div>
+                <section data-transition="fade">
+                    <h2>Globally</h2>
+                    <p><img src="images/gt-refactoring.jpg" alt=""/></p>
+                    <aside class="notes">
+                        Delegate session logic
+                        <br/>
+                        Delegate user logic
+                        <br/>
+                        Delegate authentication
+                        <br/>
+                        Focus on simulation logic
+                        <br/>
+                        Serve everything related to the simulation
+                    </aside>
+                </section>
 
-		<script src="lib/js/head.min.js"></script>
-		<script src="js/reveal.min.js"></script>
+                <section data-transition="fade">
+                    <h3>Implementation</h3>
+                    <h2>Strategy Pattern</h2>
+                    <aside class="notes">
+                        Old applications need to know when delegate new features: Array of enabled products
+                    </aside>
+                </section>
 
-		<script>
+                <section data-transition="fade">
+                    <h3>Solutions</h3>
+                    <h2>OAuth2</h2>
+                    <img src="images/oauth.png" alt=""/>
+                    <aside class="notes">
+                        Shared auth between Frontend app and Auth app
+                    </aside>
+                </section>
 
-			// Full list of configuration options available here:
-			// https://github.com/hakimel/reveal.js#configuration
-			Reveal.initialize({
-				controls: true,
-				progress: true,
-				history: true,
-				center: true,
+                <section data-transition="fade">
+                    <h3>Solutions</h3>
+                    <h2>Backend App API</h2>
+                    <img src="images/backend-api.png" alt=""/>
+                    <aside class="notes">
+                        Standalone application
+                        <br/>
+                        Future Backend App v3
+                        <br/>
+                        Leverage Doctrine2 mapping to change the model
+                    </aside>
+                </section>
 
-				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
-				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+                <section data-transition="fade">
+                    <h3>Solutions</h3>
+                    <h2>Product API</h2>
+                    <img src="images/product-private-api.png" alt=""/>
 
-				// Optional libraries used to extend on reveal.js
-				dependencies: [
-					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
-					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
-					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
-				]
-			});
+                    <aside class="notes">
+                        Serve data and reports to Frontend and Backend App
+                        <br/>
+                        epExperienceChangePlugin
+                        <br/>
+                        API consumers deal with representation.
+                    </aside>
+                </section>
 
-		</script>
+                <section data-transition="fade">
+                    <h2>The other way around</h2>
+                    <img src="images/product-api.jpg" alt=""/>
+                    <aside class="notes">
+                        Product options: Remove every simulation details from Backend App
+                    </aside>
+                </section>
 
-	</body>
+                <section>
+                    <h3>Step 3</h3>
+                    <h2>Consolidate</h2>
+
+                    <p class="fragment">BackendAppSdkBundle</p>
+                    <p class="fragment">OAuth2ClientBundle</p>
+                    <p class="fragment">ApiBundle</p>
+                    <p class="fragment">AssetsBundle</p>
+
+                    <h3 class="fragment">Rinse and repeat...</h3>
+
+                    <aside class="notes">
+                        What do you do before starting a new project? refactoring refactoring
+                        <br/>
+                        extract common feature into bundles
+                        <br/>
+                        share those bundles accross new apps
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>Step 4</h3>
+                    <h2>Plan for the futur</h2>
+                    <aside class="notes">
+                        wrapping old app into sf2 (session bridge)
+                        <br/>
+                        divide and gater (again) (old backend app with sf2 app, extract auth layer)
+                        <br/>
+                        get ride of flash = html5+js (Angular?) more and nore mobile app to train/prepare transition
+                        <br/>
+                        Pilot cache strategy from client
+                    </aside>
+                </section>
+
+                <section data-transition="zoom">
+                    <h2>Question?</h2>
+                    <p class="fragment grow"><a href="http://joind.in/9999">joind.in/9999</a> <small class="quiet">(four 9)</small></p>
+                    <br/>
+                    <div class="fragment roll-in">
+                        <h3>Symfony <img src="images/meetup.png" width="100" class="nude" alt="" /></h3>
+                    </div>
+                    <br/>
+                    <div class="fragment">
+                        <h3>We are hiring!</h3>
+                        <p><a href="http://www.experiencepoint.com/careers">experiencepoint.com/careers</a></p>
+                    </div>
+
+                    <aside class="notes">
+                        Symfony Toronto Meetup group
+                    </aside>
+                </section>
+            </div>
+        </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.min.js"></script>
+        <script>
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: false,
+                progress: true,
+                history: true,
+                center: true,
+
+                theme: Reveal.getQueryHash().theme || 'ep', // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+                ]
+            });
+        </script>
+    </body>
 </html>
